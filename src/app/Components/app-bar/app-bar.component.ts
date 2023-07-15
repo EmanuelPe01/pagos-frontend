@@ -23,7 +23,11 @@ export class AppBarComponent {
         icon: "pi pi-users",
         routerLink: "/clients"
       },
-      
+      {
+        label: "Productos",
+        icon: "pi pi-inbox",
+        routerLink: "/products"
+      },
     ]
   }
 }
