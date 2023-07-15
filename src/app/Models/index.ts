@@ -1,0 +1,1 @@
+export { Client, Clientes } from './ClientModel'

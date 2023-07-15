@@ -1,0 +1,10 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.title {
+    font-size: 25px;
+    font-weight: bold;
+    color: #290156;
+}
