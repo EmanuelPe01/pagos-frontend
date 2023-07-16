@@ -1,4 +1,105 @@
 <app-navbar titulo="Productos"></app-navbar>
 <div class="card">
-    
+    <div class="browser">
+        <span class="p-float-label">
+            <input 
+                pInputText id="search" 
+                [(ngModel)]="searchItem" 
+                name="search" 
+                (ngModelChange)="filterSearch()"
+                class="input-form"
+            />
+            <label htmlFor="search">Nombre del producto</label>
+        </span>
+    </div>
+    <p-divider></p-divider>
+    <ng-container *ngIf="loading; else mainScreen">
+        <div class="loader">
+            <p-progressSpinner 
+                styleClass="w-3rem h-3rem" 
+                strokeWidth="6" 
+                fill="var(--surface-ground)" 
+                animationDuration=".8s">
+            </p-progressSpinner>
+        </div>
+    </ng-container>
+    <ng-template #mainScreen>
+        <ng-container *ngIf="items?.length == 0; else Content">
+            <div class="loader">
+                <p>Sin registros</p>
+            </div>
+        </ng-container>
+        <ng-template #Content>
+            <p-panelMenu 
+                [model]="items" 
+                [style]="{'width':'100%'}" 
+                [multiple]="false"
+            ></p-panelMenu>
+        </ng-template>
+    </ng-template>
+    <div class="button-plus">
+        <p-button 
+            (click)="showDialog()" 
+            icon="pi pi-plus" 
+            styleClass="p-button-rounded p-button-help p-button-raised"
+        ></p-button>
+        <p-dialog 
+            header="Registrar nuevo producto" 
+            [modal]="true" 
+            [(visible)]="visible" 
+            [breakpoints]="{ '960px': '75vw' }" 
+            [style]="{ width: '50vw' }" 
+            [draggable]="false" 
+            [resizable]="false"
+        >
+            <div class="card-modal">
+                <form>
+                    <span class="p-float-label">
+                        <input 
+                            type="text" 
+                            pInputText 
+                            [required]="true" 
+                            [(ngModel)]="name" 
+                            id="producto" 
+                            name="producto" 
+                            class="input-form"
+                        />
+                        <label htmlFor="producto" for="producto">Nombre del producto</label> 
+                    </span>
+                    <div class="precio">
+                        <span class="p-float-label">
+                            <p-inputNumber 
+                                [required]="true" 
+                                [(ngModel)]="price" 
+                                name="precio" 
+                                inputId="precio"
+                                mode="currency" 
+                                currency="USD" 
+                                locale="en-US"
+                                [minFractionDigits]="2"
+                            ></p-inputNumber>
+                            <label 
+                                htmlFor="precio" 
+                                for="precio"
+                            >
+                                Precio del producto
+                            </label>
+                        </span>
+                    </div>
+                    <div class="button-footer">
+                        <p-button 
+                            label="Guardar" 
+                            styleClass="p-button-rounded"   
+                            (onClick)="saveProduct()"                 
+                        ></p-button>
+                        <p-button 
+                            label="Cancelar" 
+                            styleClass="p-button-rounded p-button-danger"
+                            (onClick)= "showDialog()"
+                        ></p-button>
+                    </div>
+                </form>
+            </div>
+        </p-dialog>
+    </div>
 </div>

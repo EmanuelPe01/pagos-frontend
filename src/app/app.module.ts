@@ -23,7 +23,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { DividerModule } from 'primeng/divider';
-import { FilterService } from 'primeng/api';
+import { InputNumberModule } from 'primeng/inputnumber';
 import { ProductosComponent } from './Screens/productos/productos.component';
 
 
@@ -53,6 +53,7 @@ import { ProductosComponent } from './Screens/productos/productos.component';
     InputTextModule,
     ToastModule,
     ProgressSpinnerModule,
+    InputNumberModule,
     DividerModule,
   ],
   providers: [],

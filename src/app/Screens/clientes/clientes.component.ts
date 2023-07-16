@@ -73,8 +73,7 @@ export class ClientesComponent {
   showSuccess() {
     this.messageService.add({ severity: 'success', summary: 'Registro exitoso', detail: 'Cliente registrado correctamente' });
   }
-
-
+  
   saveClient(){
     if(!this.name){
       this.showError('Campos vacíos', 'Debes llenar el formulario')
@@ -127,18 +126,19 @@ export class ClientesComponent {
       }
     )
 
-    if(flag){
-      this.items = items_aux;
-    } else {
-      this.items = [];
-    }
+    
 
-    if(this.searchItem == ''){
-      this.getClients();
-    }
+    if(this.searchItem == '')
+      this.getClients(); 
+    else {
+      if(flag)
+        this.items = items_aux; 
+      else 
+        this.items = [];
 
-    setTimeout(() => {
-      this.loading = false;
-    }, 1000);
+      setTimeout(() => {
+        this.loading = false;
+      }, 1000);
+    }
   }
 }
