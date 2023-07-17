@@ -3,24 +3,27 @@
     <div class="browser">
         <span class="p-float-label">
             <input 
-                pInputText id="search" 
+                pInputText 
+                id="search" 
                 [(ngModel)]="searchItem" 
                 name="search" 
                 (ngModelChange)="filterSearch()"
+                class="w-full"
             />
             <label htmlFor="search">Nombre del cliente</label>
         </span>
     </div>
     <p-divider></p-divider>
     <ng-container *ngIf="loading; else mainScreen">
-        <div class="loader">
-            <p-progressSpinner 
-                styleClass="w-3rem h-3rem" 
-                strokeWidth="6" 
-                fill="var(--surface-ground)" 
-                animationDuration=".8s">
-            </p-progressSpinner>
-        </div>
+        <app-load-skeleton></app-load-skeleton>
+        <app-load-skeleton></app-load-skeleton>
+        <app-load-skeleton></app-load-skeleton>
+        <app-load-skeleton></app-load-skeleton>
+        <app-load-skeleton></app-load-skeleton>
+        <app-load-skeleton></app-load-skeleton>
+        <app-load-skeleton></app-load-skeleton>
+        <app-load-skeleton></app-load-skeleton>
+        <app-load-skeleton></app-load-skeleton>
     </ng-container>
     <ng-template #mainScreen>
         <ng-container *ngIf="items?.length==0; else Content">
@@ -29,7 +32,13 @@
             </div>
         </ng-container>
         <ng-template #Content>
-            <p-panelMenu [model]="items" [style]="{'width':'100%'}" [multiple]="false"></p-panelMenu>
+            <div class="border-round border-1 surface-border p-2 surface-card my-2">
+                <p-panelMenu 
+                    [model]="items" 
+                    [style]="{'width':'100%'}" 
+                    [multiple]="false"
+                ></p-panelMenu>
+            </div>
         </ng-template>
     </ng-template>
     <div class="button-plus">
@@ -38,7 +47,7 @@
             <div class="card-modal">
                 <form>
                     <span class="p-float-label">
-                        <input type="text" pInputText [(ngModel)]="name" id="cliente" name="cliente" required="true"/>
+                        <input type="text" pInputText [(ngModel)]="name" id="cliente" class="w-full" name="cliente" required="true"/>
                         <label htmlFor="cliente" for="cliente">Nombre del cliente</label>
                     </span>
                     <div class="button-footer">

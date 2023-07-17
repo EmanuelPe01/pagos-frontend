@@ -3,6 +3,7 @@ import { MenuItem, MessageService } from 'primeng/api';
 import { Product, Products } from 'src/app/Models';
 import { FilterService } from 'primeng/api';
 import { ProductosService } from 'src/app/Services/productos/productos.service';
+import { Conditional } from '@angular/compiler';
 
 @Component({
   selector: 'app-productos',
@@ -17,6 +18,8 @@ export class ProductosComponent {
   loading: boolean = true
   searchItem: string | undefined
   visible: boolean = false
+  confirmDelete: boolean = false
+  idProduct: number = 0
 
   name: string | undefined
   price: number | undefined
@@ -28,7 +31,7 @@ export class ProductosComponent {
   ){ }
 
   ngOnInit(){
-    this.getAllProducts()
+    this.getAllProducts();
   }
 
   getAllProducts(){
@@ -47,7 +50,10 @@ export class ProductosComponent {
                 }, 
                 {
                   label: 'Eliminar',
-                  icon: 'pi pi-times'
+                  icon: 'pi pi-times',
+                  command: () => {
+                    this.showDelete(producto.id);
+                  }
                 }
               ]
             }
@@ -55,7 +61,7 @@ export class ProductosComponent {
           });
           setTimeout(() => {
             this.loading=false;
-          }, 1000);
+          }, 500);
           this.items = items_aux;
       });
   }
@@ -76,7 +82,10 @@ export class ProductosComponent {
             }, 
             {
               label: 'Eliminar',
-              icon: 'pi pi-times'
+              icon: 'pi pi-times',
+              comand: () => {
+                this.showDelete(producto.id);
+              }
             }
           ]
         }
@@ -95,7 +104,7 @@ export class ProductosComponent {
 
       setTimeout(() => {
         this.loading = false;
-      }, 1000);
+      }, 500);
     } 
   }
 
@@ -105,12 +114,17 @@ export class ProductosComponent {
     this.price = undefined
   }
 
+  showDelete(idProduct: number) {
+    this.confirmDelete = !this.confirmDelete
+    this.idProduct = idProduct
+  }
+
   showError(title: string, detail: string) {
     this.messageService.add({severity: 'error', summary: title, detail: detail });
   }
 
-  showSuccess() {
-    this.messageService.add({severity: 'success', summary: 'Registro exitoso', detail: 'Producto registrado correctamente' });
+  showSuccess(title: string, detail: string) {
+    this.messageService.add({severity: 'success', summary: title, detail: detail});
   }
 
   saveProduct() {
@@ -125,16 +139,32 @@ export class ProductosComponent {
 
       this.productService.saveProduct(producto).subscribe(
         (data) => {
-          this.showSuccess()
+          this.showSuccess('Registro exitoso', 'Producto registrado correctamente')
           this.showDialog();
           setTimeout(()=> {
-            window.location.reload();
-          }, 1000);
+            this.getAllProducts();
+          }, 500);
         },
         (error) => {
           this.showError('Producto inválido', 'El producto ya esta registrado');
         }
       )
     }
+  }
+
+  deleteProduct() {
+    this.productService.deleteProduct(this.idProduct).subscribe(
+      () => {
+        this.showSuccess('Eliminación completa', 'Producto eliminado correctamente')
+        this.showDelete(0);
+        setTimeout(()=> {
+          this.getAllProducts();
+        }, 500);
+      },
+      (error) => {
+        console.log(error);
+        this.showError('Error', 'Error al eliminar artículo');
+      }
+    )
   }
 }

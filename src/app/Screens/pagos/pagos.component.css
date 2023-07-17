@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+p, label, h3{
+    font-family: 'Roboto', sans-serif;
+}
+
+p{
+    font-size: 25px;
+    font-weight: bold;
+    color: #2d0010;
+}
+
+.button-plus {
+    display: flex;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+}
+
+.button-edit {
+    display: flex;
+    position: fixed;
+    bottom: 60px;
+    right: 10px;
+}
+
+.button-footer {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+h3 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #290333;
+}

@@ -55,7 +55,7 @@ export class ClientesComponent {
         });
         setTimeout(() => {
           this.loading = false;
-        }, 1000);
+        }, 500);
         this.items = items_aux;
       }
     );    
@@ -88,8 +88,8 @@ export class ClientesComponent {
           this.showSuccess();
           this.showDialog();
           setTimeout(()=> {
-            window.location.reload();
-          }, 1000);
+            this.getClients();
+          }, 500);
         },
         (error) => {
           this.showError('Error', 'Ese nombre ya está registrado');
@@ -138,7 +138,7 @@ export class ClientesComponent {
 
       setTimeout(() => {
         this.loading = false;
-      }, 1000);
+      }, 500);
     }
   }
 }

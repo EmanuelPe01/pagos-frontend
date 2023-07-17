@@ -17,4 +17,8 @@ export class ProductosService {
   saveProduct(producto: Product) {
     return this.http.post(url + 'createProduct', producto)
   }
+
+  deleteProduct(id: number){
+    return this.http.delete(url + 'deleteProduct/' + id.toString());
+  }
 }

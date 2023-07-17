@@ -1,4 +1,5 @@
 <app-navbar titulo="Productos"></app-navbar>
+<p-toast></p-toast>
 <div class="card">
     <div class="browser">
         <span class="p-float-label">
@@ -14,14 +15,15 @@
     </div>
     <p-divider></p-divider>
     <ng-container *ngIf="loading; else mainScreen">
-        <div class="loader">
-            <p-progressSpinner 
-                styleClass="w-3rem h-3rem" 
-                strokeWidth="6" 
-                fill="var(--surface-ground)" 
-                animationDuration=".8s">
-            </p-progressSpinner>
-        </div>
+        <app-load-skeleton></app-load-skeleton>
+        <app-load-skeleton></app-load-skeleton>
+        <app-load-skeleton></app-load-skeleton>
+        <app-load-skeleton></app-load-skeleton>
+        <app-load-skeleton></app-load-skeleton>
+        <app-load-skeleton></app-load-skeleton>
+        <app-load-skeleton></app-load-skeleton>
+        <app-load-skeleton></app-load-skeleton>
+        <app-load-skeleton></app-load-skeleton>
     </ng-container>
     <ng-template #mainScreen>
         <ng-container *ngIf="items?.length == 0; else Content">
@@ -30,14 +32,16 @@
             </div>
         </ng-container>
         <ng-template #Content>
-            <p-panelMenu 
-                [model]="items" 
-                [style]="{'width':'100%'}" 
-                [multiple]="false"
-            ></p-panelMenu>
+            <div class="border-round border-1 surface-border p-2 surface-card my-2">
+                <p-panelMenu 
+                    [model]="items" 
+                    [style]="{'width':'100%'}" 
+                    [multiple]="false"
+                ></p-panelMenu>
+            </div>
         </ng-template>
     </ng-template>
-    <div class="button-plus">
+    <div class="button-plus z-5">
         <p-button 
             (click)="showDialog()" 
             icon="pi pi-plus" 
@@ -66,7 +70,7 @@
                         />
                         <label htmlFor="producto" for="producto">Nombre del producto</label> 
                     </span>
-                    <div class="precio">
+                    <div class="flex justify-content-center">
                         <span class="p-float-label">
                             <p-inputNumber 
                                 [required]="true" 
@@ -103,3 +107,30 @@
         </p-dialog>
     </div>
 </div>
+
+<p-dialog 
+        header="¿Eliminar producto?" 
+        [modal]="true" 
+        [(visible)]="confirmDelete" 
+        [breakpoints]="{ '960px': '75vw' }" 
+        [style]="{ width: '50vw' }" 
+        [draggable]="false" 
+        [resizable]="false"
+    >
+        
+        <div class="card-modal">
+            <p style="text-align: justify;">Esta acción también eliminará los abonos que los clientes han hecho a este producto.</p>
+            <div class="button-footer">
+                <p-button 
+                    label="Confirmar" 
+                    styleClass="p-button-rounded p-button-danger"   
+                    (onClick)="deleteProduct()"                 
+                ></p-button>
+                <p-button 
+                    label="Cancelar" 
+                    styleClass="p-button-rounded p-button-success"
+                    (onClick)= "showDelete(0)"
+                ></p-button>
+            </div>
+        </div>
+    </p-dialog>

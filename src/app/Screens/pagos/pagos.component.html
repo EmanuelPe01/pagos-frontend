@@ -1,1 +1,173 @@
-<p>pagos works!</p>
+<p-toast></p-toast>
+<div class="card">
+    <ng-container *ngIf="loading; else mainScreen">
+        <app-load-payments></app-load-payments>
+    </ng-container>
+    <ng-template #mainScreen>
+        <div class="grid">
+            <div class="col-2 flex align-items-center justify-content-start">
+                <p-button 
+                    icon="pi pi-arrow-left" 
+                    styleClass="p-button-help p-button-outlined"
+                    routerLink="/clients"
+                ></p-button>
+            </div>
+            <div class="col-10 flex align-items-center justify-content-start">
+                <p-divider layout="vertical"></p-divider>
+                <p>{{ compras?.cliente?.name }}</p>
+            </div>
+        </div>
+        <div class="grid">
+            <div class="col-12">
+                <span class="p-float-label">
+                    <p-dropdown 
+                        [options]="productos"
+                        [(ngModel)]="selectedProduct" 
+                        [showClear]="true" 
+                        placeholder="Selecciona un producto"
+                        styleClass="w-full"
+                        inputId="product-label"
+                        emptyMessage="Sin resultados"
+                        [virtualScroll]="true"
+                        (onChange)="getPaymentsByProduct()"
+                    >
+                    </p-dropdown>
+                    <label for="product-label">Producto</label>
+                </span>
+            </div>
+            <div class="col-12">
+                <ng-container *ngIf="loadPayments; else paymentsTable">
+                    <div class="col-12 flex align-items-center justify-content-center">
+                        <p-skeleton class="w-full" height="4rem"></p-skeleton>
+                    </div>
+                    <div class="col-12">
+                        <p-skeleton class="w-full" height="70vh"></p-skeleton>
+                    </div>
+                </ng-container>
+                <ng-template #paymentsTable>
+                    <ng-container *ngIf="showDue">
+                        <div class="flex align-items-center justify-content-center">
+                            <h3>Adeudo: ${{adeudo}}</h3>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="noResults; else Data">
+                        <div class="flex justify-content-center align-items-center">
+                            <p>Sin registros</p>
+                        </div>
+                    </ng-container>
+                    <ng-template #Data>
+                        <div class="border-round border-1 surface-border p-2 surface-card my-2">
+                            <p-table 
+                                [value]="pagos"
+                                selectionMode="single" 
+                                [(selection)]="selectedPayment"
+                                (onRowSelect)="showEditableButton()"
+                                (onRowUnselect)="hideEditableButton()"
+                            >
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th class="text-center">Monto</th>
+                                        <th class="text-center">Fecha</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-pago>
+                                    <tr [pSelectableRow]="pago">
+                                        <td class="text-center">{{ pago.mount | currency:'USD'}}</td>
+                                        <td class="text-center">{{ pago.created_at }}</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </ng-template>
+                    <ng-container *ngIf="selectedProduct && showAdd">
+                        <div class="button-plus">
+                            <p-button (click)="showDialog()" icon="pi pi-plus" styleClass="p-button-rounded p-button-help p-button-raised"></p-button>
+                            <p-dialog header="{{labelSelectProduct}}" [modal]="true" [(visible)]="visible" [breakpoints]="{ '960px': '75vw' }" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+                                <div class="card-modal">
+                                    <form>
+                                        <div class="flex justify-content-center my-3">
+                                            <span class="p-float-label">
+                                                <p-inputNumber 
+                                                    [required]="true" 
+                                                    [(ngModel)]="mount" 
+                                                    name="precio" 
+                                                    inputId="precio"
+                                                    mode="currency" 
+                                                    currency="USD" 
+                                                    locale="en-US"
+                                                    [minFractionDigits]="2"
+                                                ></p-inputNumber>
+                                                <label 
+                                                    htmlFor="precio" 
+                                                    for="precio"
+                                                >
+                                                    Cantidad abonada
+                                                </label>
+                                            </span>
+                                        </div>
+                                        <div class="button-footer">
+                                            <p-button 
+                                                label="Guardar" 
+                                                styleClass="p-button-rounded"  
+                                                (onClick)="savePayment()"    
+                                            ></p-button>
+                                            <p-button 
+                                                label="Cancelar" 
+                                                styleClass="p-button-rounded p-button-danger"
+                                                (onClick)="showDialog()"
+                                            ></p-button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </p-dialog>
+                        </div>
+                    </ng-container>
+                </ng-template>
+            </div>
+        </div>
+
+        <ng-container *ngIf="editPayment">
+            <div class="button-edit">
+                <p-button (click)="showDialog()" icon="pi pi-pencil" styleClass="p-button-rounded p-button-info p-button-raised"></p-button>
+                <p-dialog header="{{labelSelectProduct}}" [modal]="true" [(visible)]="visible" [breakpoints]="{ '960px': '75vw' }" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+                    <div class="card-modal">
+                        <form>
+                            <div class="flex justify-content-center my-3">
+                                <span class="p-float-label">
+                                    <p-inputNumber 
+                                        [required]="true" 
+                                        [(ngModel)]="mount" 
+                                        name="precio" 
+                                        inputId="precio"
+                                        mode="currency" 
+                                        currency="USD" 
+                                        locale="en-US"
+                                        [minFractionDigits]="2"
+                                    ></p-inputNumber>
+                                    <label 
+                                        htmlFor="precio" 
+                                        for="precio"
+                                    >
+                                        Cantidad abonada
+                                    </label>
+                                </span>
+                            </div>
+                            <div class="button-footer">
+                                <p-button 
+                                    label="Guardar" 
+                                    styleClass="p-button-rounded"   
+                                    (onClick)="saveEditedPayment()"   
+                                ></p-button>
+                                <p-button 
+                                    label="Cancelar" 
+                                    styleClass="p-button-rounded p-button-danger"
+                                    (onClick)="showDialog()"
+                                ></p-button>
+                            </div>
+                        </form>
+                    </div>
+                </p-dialog>
+            </div>
+        </ng-container>
+    </ng-template>
+</div>

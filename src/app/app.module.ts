@@ -25,6 +25,12 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { DividerModule } from 'primeng/divider';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ProductosComponent } from './Screens/productos/productos.component';
+import { CardModule } from 'primeng/card';
+import { SkeletonModule } from 'primeng/skeleton';
+import { LoadSkeletonComponent } from './Components/load-skeleton/load-skeleton.component';
+import { LoadPaymentsComponent } from './Components/load-payments/load-payments.component';
+import { DropdownModule } from 'primeng/dropdown';
+import { TableModule } from 'primeng/table';
 
 
 @NgModule({
@@ -35,7 +41,9 @@ import { ProductosComponent } from './Screens/productos/productos.component';
     AppBarComponent,
     MainComponent,
     MainClientesComponent,
-    ProductosComponent
+    ProductosComponent,
+    LoadSkeletonComponent,
+    LoadPaymentsComponent
   ],
   imports: [
     BrowserModule,
@@ -55,6 +63,10 @@ import { ProductosComponent } from './Screens/productos/productos.component';
     ProgressSpinnerModule,
     InputNumberModule,
     DividerModule,
+    CardModule,
+    SkeletonModule,
+    DropdownModule,
+    TableModule
   ],
   providers: [],
   bootstrap: [AppComponent]
