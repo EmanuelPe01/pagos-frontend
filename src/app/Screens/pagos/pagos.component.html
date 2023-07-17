@@ -18,6 +18,12 @@
             </div>
         </div>
         <div class="grid">
+            <div class="flex align-items-center justify-content-center w-full">
+                <p-tabMenu 
+                    [model]="items"
+                    [activeItem]="activeItem"
+                ></p-tabMenu>
+            </div>
             <div class="col-12">
                 <span class="p-float-label">
                     <p-dropdown 
@@ -28,9 +34,16 @@
                         styleClass="w-full"
                         inputId="product-label"
                         emptyMessage="Sin resultados"
-                        [virtualScroll]="true"
+                        [group]="true"
                         (onChange)="getPaymentsByProduct()"
                     >
+                    <ng-template let-producto pTemplate="producto">
+                        <div class="flex align-items-center">
+                            <div class="flex align-items-center">
+                                <span class="ml-4">{{ producto.label }}</span>
+                            </div>
+                        </div>
+                    </ng-template>
                     </p-dropdown>
                     <label for="product-label">Producto</label>
                 </span>
@@ -81,7 +94,7 @@
                     </ng-template>
                     <ng-container *ngIf="selectedProduct && showAdd">
                         <div class="button-plus">
-                            <p-button (click)="showDialog()" icon="pi pi-plus" styleClass="p-button-rounded p-button-help p-button-raised"></p-button>
+                            <p-button (click)="showDialog(true)" icon="pi pi-plus" styleClass="p-button-rounded p-button-help p-button-raised"></p-button>
                             <p-dialog header="{{labelSelectProduct}}" [modal]="true" [(visible)]="visible" [breakpoints]="{ '960px': '75vw' }" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
                                 <div class="card-modal">
                                     <form>
@@ -107,14 +120,14 @@
                                         </div>
                                         <div class="button-footer">
                                             <p-button 
-                                                label="Guardar" 
+                                                label="Aceptar" 
                                                 styleClass="p-button-rounded"  
                                                 (onClick)="savePayment()"    
                                             ></p-button>
                                             <p-button 
                                                 label="Cancelar" 
                                                 styleClass="p-button-rounded p-button-danger"
-                                                (onClick)="showDialog()"
+                                                (onClick)="showDialog(true)"
                                             ></p-button>
                                         </div>
                                     </form>
@@ -128,7 +141,7 @@
 
         <ng-container *ngIf="editPayment">
             <div class="button-edit">
-                <p-button (click)="showDialog()" icon="pi pi-pencil" styleClass="p-button-rounded p-button-info p-button-raised"></p-button>
+                <p-button (click)="showDialog(false)" icon="pi pi-pencil" styleClass="p-button-rounded p-button-info p-button-raised"></p-button>
                 <p-dialog header="{{labelSelectProduct}}" [modal]="true" [(visible)]="visible" [breakpoints]="{ '960px': '75vw' }" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
                     <div class="card-modal">
                         <form>
@@ -161,7 +174,7 @@
                                 <p-button 
                                     label="Cancelar" 
                                     styleClass="p-button-rounded p-button-danger"
-                                    (onClick)="showDialog()"
+                                    (onClick)="showDialog(true)"
                                 ></p-button>
                             </div>
                         </form>

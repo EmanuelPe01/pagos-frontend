@@ -31,6 +31,8 @@ import { LoadSkeletonComponent } from './Components/load-skeleton/load-skeleton.
 import { LoadPaymentsComponent } from './Components/load-payments/load-payments.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { TableModule } from 'primeng/table';
+import { TabMenuModule } from 'primeng/tabmenu';
+import { BuysComponent } from './Screens/buys/buys.component';
 
 
 @NgModule({
@@ -43,7 +45,8 @@ import { TableModule } from 'primeng/table';
     MainClientesComponent,
     ProductosComponent,
     LoadSkeletonComponent,
-    LoadPaymentsComponent
+    LoadPaymentsComponent,
+    BuysComponent
   ],
   imports: [
     BrowserModule,
@@ -66,7 +69,8 @@ import { TableModule } from 'primeng/table';
     CardModule,
     SkeletonModule,
     DropdownModule,
-    TableModule
+    TableModule,
+    TabMenuModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

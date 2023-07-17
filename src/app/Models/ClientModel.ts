@@ -10,7 +10,8 @@ export interface Clientes{
 }
 
 export interface PaymentClient {
-    cliente:    Client,
-    compras:    Product[]
+    cliente:       Client,
+    pendientes:    Product[],
+    pagados:       Product[]
 }
 
