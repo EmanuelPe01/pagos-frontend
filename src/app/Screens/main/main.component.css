@@ -3,3 +3,8 @@
     display: flex;
     justify-content: center;
 }
+
+pdf-viewer{
+    width: 350px;
+    height: 70vh;
+}

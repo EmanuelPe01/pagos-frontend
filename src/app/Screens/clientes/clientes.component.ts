@@ -40,14 +40,14 @@ export class ClientesComponent {
             label: cliente.name,
             items: [
               {
-                label: 'Registrar abono',
+                label: 'Abonos',
                 icon: 'pi pi-dollar',
                 routerLink: '/clients/registerPayment/'+cliente.id
               },
               {
-                label: 'Registrar compra',
+                label: 'Compras',
                 icon: 'pi pi-cart-plus',
-                routerLink: '/clients/registerProduct/'+cliente.id
+                routerLink: '/clients/registerBuy/'+cliente.id
               }
             ]
           };

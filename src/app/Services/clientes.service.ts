@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Client, Clientes, PaymentClient, url } from '../Models';
+import { Client, Clientes, PaymentClient, url, Buys } from '../Models';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -18,6 +18,10 @@ export class ClientesService {
   }
 
   getBuys(id: string){
-    return this.http.get<PaymentClient>(url + 'getClient/' + id)
+    return this.http.get<PaymentClient>(url + 'getClient/' + id);
+  }
+
+  getBuysWithoutFilter (id: string) {
+    return this.http.get<Buys>(url + 'getBuys/'+id);
   }
 }

@@ -29,6 +29,12 @@ p{
     display: flex;
     justify-content: space-between;
 }
+.button-paymets{
+    display: flex;
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+}
 
 h3 {
     font-size: 20px;

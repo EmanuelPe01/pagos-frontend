@@ -1,7 +1,8 @@
 export interface Product {
     id:         number,
     name:       string,
-    price:      number
+    price:      number,
+    created_at: string
 }
 
 export interface Products {

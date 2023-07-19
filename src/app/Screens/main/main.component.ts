@@ -1,52 +1,42 @@
 import { Component } from '@angular/core';
 
+interface UploadEvent {
+  originalEvent: Event;
+  files: File[];
+}
+
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.css']
 })
 export class MainComponent {
-  images: any[] = [
-    {
-      src: "../../../assets/img/1.jpg",
-      mini: "../../../assets/img/1_1.jpg",
-      alt: 'Un precio',
-      title: 'Producto 1'
-    },
-    {
-      src: "../../../assets/img/2.jpg",
-      mini: "../../../assets/img/2_1.jpg",
-      alt: 'Un precio',
-      title: 'Producto 2'
-    },
-    {
-      src: "../../../assets/img/3.jpg",
-      mini: "../../../assets/img/3_1.jpg",
-      alt: 'Un precio',
-      title: 'Producto 3'
-    },
-    {
-      src: "../../../assets/img/4.jpg",
-      mini: "../../../assets/img/4_1.jpg",
-      alt: 'Un precio',
-      title: 'Producto 4'
-    },
-  ]
 
-  responsiveOptions: any[] = [
-      {
-          breakpoint: '1024px',
-          numVisible: 5
-      },
-      {
-          breakpoint: '768px',
-          numVisible: 3
-      },
-      {
-          breakpoint: '560px',
-          numVisible: 1
-      }
-  ];
+  pdfSrc: string = '../../../assets/pdf/info.pdf'
 
+  zoom = 1.0;
+  
+  zoomIn(): void {
+    this.zoom += 0.1;
+  }
+
+  zoomOut(): void {
+    if (this.zoom > 0.5) {
+      this.zoom -= 0.1;
+    }
+  }
+
+  zoomReset(): void {
+    this.zoom = 1.0;
+  }
+
+  uploadFile()
+  {
+    console.log('Se esta cargando')
+  }
+
+  onUpload(event: any): void {
+    console.log('Jelou')
+  }
 
 }

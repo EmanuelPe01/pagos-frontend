@@ -19,7 +19,7 @@ interface singleProduct {
 })
 export class PagosComponent {
   compras: PaymentClient | undefined
-  selectedProduct: number | undefined
+  selectedProduct: any 
   mount: number | undefined
   productos: SelectItemGroup[] = [];
   pagos: Payment[] = []
@@ -102,6 +102,7 @@ export class PagosComponent {
           })
           const group = {
             label: grupo,
+            value: grupo,
             items: items
           }
           this.productos.push(group)
@@ -118,7 +119,7 @@ export class PagosComponent {
           })
           const group = {
             label: grupo,
-            value: 'f',
+            value: grupo,
             items: items
           }
           this.productos.push(group)
@@ -128,17 +129,26 @@ export class PagosComponent {
 
   getPaymentsByProduct(){
     this.pagos = []
+    let producto: any = {
+      name:         String,
+      id_producto:  Number
+    }
+    
     if(this.selectedProduct){
       const id_product = this.selectedProduct
       let abonos = 0
       this.loadPayments = true;
 
-      if(this.filterPayment == 1) 
-        var producto = this.compras?.pendientes.find((producto) => {return producto.id  == id_product})
-      else if (this.filterPayment == 2)
-        var producto = this.compras?.pagados.find((producto) => {return producto.id  == id_product})
-      
-      this.labelSelectProduct = 'Registrar abono: ' + producto?.name
+      this.productos.find(
+        grupo => grupo.items.find(item => {
+          if(item.value == id_product){
+            producto.id_producto = item.value
+            producto.name = item.label
+          }
+        })
+      );
+
+      this.labelSelectProduct = 'Registrar abono: ' + producto.name
 
       this.paymentService.getPayments(id_product).subscribe(
         (data: Payments) => {
@@ -249,6 +259,7 @@ export class PagosComponent {
   showDialog(flag: boolean){
     this.visible = !this.visible;
     if(flag) {
+      this.editPayment = false;
       this.mount = undefined;
       this.selectedPayment = undefined;
     }
@@ -264,18 +275,28 @@ export class PagosComponent {
 
   showEditableButton(){
     this.editPayment = true;
+    let producto: any = {
+      name:         String,
+      id_producto:  Number
+    }
+
     if(this.selectedProduct && this.selectedPayment){
       const id_product = this.selectedProduct
       const id_payment = this.selectedPayment.id
-      if(this.filterPayment == 1) 
-        var producto = this.compras?.pendientes.find((producto) => {return producto.id  == id_product})
-      else if (this.filterPayment == 2)
-        var producto = this.compras?.pagados.find((producto) => {return producto.id  == id_product})
+      
+      this.productos.find(
+        grupo => grupo.items.find(item => {
+          if(item.value == id_product){
+            producto.id_producto = item.value
+            producto.name = item.label
+          }
+        })
+      );
       
       var pay = this.pagos.find((pago) => {
         return pago.id == id_payment
       })
-      this.labelSelectProduct = 'Registrar abono: ' + producto?.name
+      this.labelSelectProduct = 'Registrar abono: ' + producto.name
       this.mount = pay?.mount
     }
   }

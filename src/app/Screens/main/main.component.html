@@ -1,17 +1,28 @@
 <app-navbar titulo="Inicio"></app-navbar>
 <div class="card flex justify-content-center">
-    <p-galleria [value]="images" [autoPlay]="true" [circular]="true" [responsiveOptions]="responsiveOptions" [containerStyle]="{ 'max-width': '330px' }" [numVisible]="3">
-        <ng-template pTemplate="item" let-item>
-            <img [src]="item.src" style="width: 100%;" />
-        </ng-template>
-        <ng-template pTemplate="thumbnail" let-item>
-            <div class="grid grid-nogutter justify-content-center">
-                <img [src]="item.mini"/>
-            </div>
-        </ng-template>
-        <ng-template pTemplate="caption" let-item>
-            <h4 style="margin-bottom: .5rem; color: #ffffff;">{{ item.title }}</h4>
-            <p>{{ item.alt }}</p>
-        </ng-template>
-    </p-galleria>
+    <div class="grid">
+        <div class="border-round border-1 surface-border surface-card ml-5">
+            <pdf-viewer 
+                [src]="pdfSrc" 
+                [zoom]="zoom" 
+                [original-size]="false"
+            ></pdf-viewer>
+        </div>
+        <div class="flex justify-content-between my-3 align-items-center col-12">
+            <p-button icon="pi pi-search-plus" (click)="zoomIn()" styleClass="p-button-secondary"></p-button>
+            <p-button icon="pi pi-search-minus" (click)="zoomOut()" styleClass="p-button-secondary"></p-button>
+            <p-button icon="pi pi-replay" (click)="zoomReset()" styleClass="p-button-secondary"></p-button>
+        </div>
+        <div class="flex justify-content-center my-3 align-items-center col-12">
+            <p-fileUpload 
+                mode="basic" 
+                chooseLabel="Elegir archivo"
+                accept="application/pdf"
+                url="savePdf()"
+                (onUpload)="onUpload($event)"
+                [auto]="true"
+            ></p-fileUpload>
+        </div>
+    </div>
+    
 </div>

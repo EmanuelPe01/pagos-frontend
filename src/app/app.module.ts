@@ -33,6 +33,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { TableModule } from 'primeng/table';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { BuysComponent } from './Screens/buys/buys.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { FileUploadModule } from 'primeng/fileupload';
 
 
 @NgModule({
@@ -71,6 +73,8 @@ import { BuysComponent } from './Screens/buys/buys.component';
     DropdownModule,
     TableModule,
     TabMenuModule,
+    PdfViewerModule,
+    FileUploadModule
   ],
   providers: [],
   bootstrap: [AppComponent]

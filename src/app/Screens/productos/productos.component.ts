@@ -14,7 +14,7 @@ import { Conditional } from '@angular/compiler';
 export class ProductosComponent {
 
   productos: Products | undefined
-  items: MenuItem[] | undefined
+  items: MenuItem[] = []
   loading: boolean = true
   searchItem: string | undefined
   visible: boolean = false
@@ -35,8 +35,8 @@ export class ProductosComponent {
   }
 
   getAllProducts(){
-    let items_aux: MenuItem [] = []
     this.loading = true;
+    let items_aux: MenuItem[] = []
     this.productService.getAll().subscribe(
       (data: Products) => {
         this.productos = data;
@@ -59,10 +59,10 @@ export class ProductosComponent {
             }
             items_aux.push(item);
           });
+          this.items = items_aux;
           setTimeout(() => {
             this.loading=false;
           }, 500);
-          this.items = items_aux;
       });
   }
 
@@ -83,13 +83,13 @@ export class ProductosComponent {
             {
               label: 'Eliminar',
               icon: 'pi pi-times',
-              comand: () => {
+              command: () => {
                 this.showDelete(producto.id);
               }
             }
           ]
         }
-        items_aux.push(item);
+        items_aux.push(item)
         flag = true;
       }
     })
@@ -134,7 +134,8 @@ export class ProductosComponent {
       const producto: Product = {
         id: 0,
         name: this.name,
-        price: Math.round(this.price)
+        price: Math.round(this.price),
+        created_at: ''
       }
 
       this.productService.saveProduct(producto).subscribe(
